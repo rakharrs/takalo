@@ -38,7 +38,7 @@ create table echange(
     idechange int auto_increment primary key not null ,
     idobjet1 int references objet(idobjet),
     idobjet2 int references objet(idobjet),
-    date DATE  -- Date de la proposition
+    date timestamp  -- Date de la proposition
 );
 ALTER TABLE echange engine = InnoDB;
 
@@ -51,10 +51,21 @@ ALTER TABLE etat engine = InnoDB;
 create table statutechange(
     idstatutechange int auto_increment primary key ,
     idechange int references echange(idechange),
-    date DATE,    -- Date de lu changement d'etat (Acceptation / Refus / Annulation)
+
+    date timestamp,    -- Date de lu changement d'etat (Acceptation / Refus / Annulation)
     idetat int references etat(idetat)
 );
-ALTER TABLE utilisateur engine = statutechange;
+ALTER TABLE utilisateur engine = InnoDB;
+
 
 -- utilisateur par defaut
 insert into utilisateur(nom, prenom, email, motdepasse, admin) value ('ad','min','admin@admin.admin','admin',true);
+
+
+-- categorie test
+insert into categorie(nomcategorie) values ('meuble'), ('decoration');
+
+
+-- premier objet
+insert into objet(idutilisateur, idcategorie, prixestimatif, titre, description)
+values(1, 1, 30000, 'modern chair', 'a pretty modern white chair !');
